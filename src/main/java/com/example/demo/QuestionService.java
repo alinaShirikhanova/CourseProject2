@@ -3,7 +3,7 @@ package com.example.demo;
 import java.util.Collection;
 
 public interface QuestionService {
-    Question add(String question, String answer);
+    Question add(String question, String answer) throws BadRequestException;
 
     Question add(Question question);
 
