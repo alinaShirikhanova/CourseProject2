@@ -14,20 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class JavaQuestionServiceTest {
 
-    JavaQuestionService javaQuestionService;
+    JavaQuestionService javaQuestionService = new JavaQuestionService();
     Question question1;
     Question question2;
 
     @BeforeEach
-    void setUp() {
-        javaQuestionService = new JavaQuestionService();
-        question1 = new Question("Вопрос 1", "Ответ 1");
-        question2 = new Question("Вопрос 2", "Ответ 2");
-
+    void setUp() throws BadRequestException {
+        question1 = new Question("Question 1", "Answer 1");
+        question2 = new Question("Question 2", "Answer 2");
         javaQuestionService.add(question1);
         javaQuestionService.add(question2);
     }
@@ -39,9 +38,10 @@ class JavaQuestionServiceTest {
 
     @Test
     void addExistingQuestion() {
-        Assertions.assertEquals(List.of(question1), javaQuestionService.getAll());
+        javaQuestionService.add(question1);
+        javaQuestionService.add(question2);
+        Assertions.assertEquals(List.of(question1, question2), javaQuestionService.getAll());
     }
-
 
 
     @Test

@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,28 +13,26 @@ import java.util.Random;
 @Service
 public class JavaQuestionService implements QuestionService {
 
-    private final ArrayList<Question> questions = new ArrayList<>();
+    private ArrayList<Question> questions;
 
 
     @Override
     public Question add(String question, String answer) {
+        if (questions == null)
+            questions = new ArrayList<>();
         for (Question questionElem : questions) {
             if (questionElem.getQuestion().equals(question))
-                return null;
+               return null;
         }
         Question questionObject = new Question(question, answer);
         questions.add(questionObject);
         return questionObject;
     }
 
+
     @Override
     public Question add(Question question) {
-        for (Question questionElem : questions) {
-            if (questionElem.getQuestion().equals(question.getQuestion()))
-                return null;
-        }
-        questions.add(question);
-        return question;
+       return add(question.getQuestion(), question.getAnswer());
     }
 
 

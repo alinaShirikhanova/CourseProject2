@@ -23,7 +23,7 @@ public class JavaQuestionController {
     }
 
     @GetMapping(path = "/exam/java/add")
-    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer)  {
+    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer)   throws BadRequestException{
         return javaQuestionService.add(question, answer);
     }
 
