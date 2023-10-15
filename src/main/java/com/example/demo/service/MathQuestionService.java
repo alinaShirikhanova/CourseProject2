@@ -1,29 +1,30 @@
-package com.example.demo;
+package com.example.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.example.demo.BadRequestException;
+import com.example.demo.Question;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-
 @Service
-public class JavaQuestionService implements QuestionService {
-
-    private ArrayList<Question> questions;
+@Qualifier("mathQuestionService")
+public class MathQuestionService implements QuestionService{
+    private ArrayList<Question> questions = new ArrayList<>();
 
 
     @Override
     public Question add(String question, String answer) {
-        if (questions == null)
-            questions = new ArrayList<>();
-        for (Question questionElem : questions) {
-            if (questionElem.getQuestion().equals(question))
-               return null;
-        }
+//        if (questions == null)
+//            questions = new ArrayList<>();
+//        for (Question questionElem : questions) {
+//            if (questionElem.getQuestion().equals(question))
+//               throw new BadRequestException("Такой вопрос уже существует");
+//        }
+        if (questions.contains(new Question(question, answer)))
+            throw new BadRequestException("Такой вопрос уже существует");
         Question questionObject = new Question(question, answer);
         questions.add(questionObject);
         return questionObject;
@@ -32,7 +33,7 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question add(Question question) {
-       return add(question.getQuestion(), question.getAnswer());
+        return add(question.getQuestion(), question.getAnswer());
     }
 
 
@@ -46,7 +47,7 @@ public class JavaQuestionService implements QuestionService {
                 return questionToRemove;
             }
         }
-        return null;
+        throw new BadRequestException("Такого вопроса нет");
     }
 
     @Override

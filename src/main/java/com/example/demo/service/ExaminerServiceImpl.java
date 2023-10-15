@@ -1,5 +1,10 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.BadRequestException;
+import com.example.demo.Question;
+import com.example.demo.service.ExaminerService;
+import com.example.demo.service.QuestionService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +16,7 @@ public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService questionService;
     Random random =  new Random();
 
-    public ExaminerServiceImpl(QuestionService questionService) {
+    public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService questionService) {
         this.questionService = questionService;
     }
 

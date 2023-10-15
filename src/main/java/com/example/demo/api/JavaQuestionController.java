@@ -1,18 +1,21 @@
-package com.example.demo;
+package com.example.demo.api;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.BadRequestException;
+import com.example.demo.Question;
+import com.example.demo.service.JavaQuestionService;
+import com.example.demo.service.QuestionService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
-public class JavaQuestionController {
-    private final JavaQuestionService javaQuestionService;
 
-    public JavaQuestionController(JavaQuestionService javaQuestionService) {
+public class JavaQuestionController {
+    private final QuestionService javaQuestionService;
+
+    public JavaQuestionController(@Qualifier("javaQuestionService") JavaQuestionService javaQuestionService) {
         this.javaQuestionService = javaQuestionService;
     }
 
@@ -23,7 +26,7 @@ public class JavaQuestionController {
     }
 
     @GetMapping(path = "/exam/java/add")
-    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer)   throws BadRequestException{
+    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer)   throws BadRequestException {
         return javaQuestionService.add(question, answer);
     }
 

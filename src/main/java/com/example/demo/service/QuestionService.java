@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.demo.service;
+
+import com.example.demo.BadRequestException;
+import com.example.demo.Question;
 
 import java.util.Collection;
 

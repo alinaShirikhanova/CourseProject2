@@ -1,16 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.service.JavaQuestionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,21 +29,31 @@ class JavaQuestionServiceTest {
 
     @Test
     void addQuestion() {
-        Assertions.assertEquals(List.of(question1, question2), javaQuestionService.getAll());
+        assertEquals(List.of(question1, question2), javaQuestionService.getAll());
     }
 
     @Test
-    void addExistingQuestion() {
-        javaQuestionService.add(question1);
-        javaQuestionService.add(question2);
-        Assertions.assertEquals(List.of(question1, question2), javaQuestionService.getAll());
+    void addQuestion2() {
+        assertThrows(BadRequestException.class, () -> javaQuestionService.add(new Question("Question 1", "Answer 1")));
     }
+
+//    @Test
+//    void addExistingQuestion() {
+//        javaQuestionService.add(question1);
+//        javaQuestionService.add(question2);
+//        assertEquals(List.of(question1, question2), javaQuestionService.getAll());
+//    }
 
 
     @Test
     void remove() {
         javaQuestionService.remove(question1);
-        Assertions.assertEquals(List.of(question2), javaQuestionService.getAll());
+        assertEquals(List.of(question2), javaQuestionService.getAll());
+    }
+
+    @Test
+    void remove2() {
+        assertThrows(BadRequestException.class, () -> javaQuestionService.remove(new Question("волырваы", "jsfs")));
     }
 
     @Test
