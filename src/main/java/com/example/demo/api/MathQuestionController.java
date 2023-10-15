@@ -16,22 +16,22 @@ import java.util.Collection;
 public class MathQuestionController {
     private final QuestionService questionService;
 
-    public MathQuestionController(@Qualifier("mathQuestionService")QuestionService questionService) {
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService questionService) {
         this.questionService = questionService;
     }
+
     @GetMapping(path = "/exam/java")
-    public Collection<Question> getQuestions(){
+    public Collection<Question> getQuestions() {
         return questionService.getAll();
     }
 
     @GetMapping(path = "/exam/java/add")
-    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer)   throws BadRequestException {
+    public Question addQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer) throws BadRequestException {
         return questionService.add(question, answer);
     }
 
     @GetMapping(path = "/exam/java/remove")
-    public Question removeQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer){
+    public Question removeQuestion(@RequestParam("question") String question, @RequestParam("answer") String answer) {
         return questionService.remove(new Question(question, answer));
     }
-
 }
